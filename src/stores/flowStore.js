@@ -28,4 +28,10 @@ export const useFlowStore = create((set, get) => ({
       nodes: [...get().nodes, node],
     })
   },
+  setFlow: (flow) => {
+    set({
+      nodes: flow.nodes,
+      edges: flow.edges,
+    })
+  },
 }))

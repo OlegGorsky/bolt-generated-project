@@ -1,9 +1,8 @@
-import TextNode from './TextNode'
-import ButtonNode from './ButtonNode'
-import ImageNode from './ImageNode'
+import BlockNode from './BlockNode'
 
 export const nodeTypes = {
-  text: TextNode,
-  button: ButtonNode,
-  image: ImageNode
+  text: BlockNode,
+  button: BlockNode,
+  condition: BlockNode,
+  api: BlockNode
 }

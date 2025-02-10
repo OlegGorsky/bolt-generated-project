@@ -1,0 +1,27 @@
+version: '1.0'
+name: Default Project
+description: A sample chatbot project
+created: 2023-08-20
+updated: 2023-08-20
+nodes:
+  - id: start
+    type: text
+    position: { x: 100, y: 100 }
+    data:
+      message: Welcome to the chatbot!
+  
+  - id: choice
+    type: button
+    position: { x: 100, y: 250 }
+    data:
+      label: Make a choice
+      options:
+        - label: Option 1
+          value: opt1
+        - label: Option 2
+          value: opt2
+
+edges:
+  - id: e1
+    source: start
+    target: choice

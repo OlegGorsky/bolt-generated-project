@@ -1,0 +1,56 @@
+version: '1.0'
+blocks:
+  text:
+    name: Text Message
+    category: Basic
+    inputs:
+      - type: text
+        name: message
+        default: Enter your message
+    ports:
+      input: single
+      output: single
+
+  button:
+    name: Button Response
+    category: Interactive
+    inputs:
+      - type: text
+        name: label
+        default: Click me
+      - type: text
+        name: action
+        default: next
+    ports:
+      input: single
+      output: multiple
+
+  condition:
+    name: Condition
+    category: Logic
+    inputs:
+      - type: select
+        name: operator
+        options: [equals, contains, greater, less]
+        default: equals
+      - type: text
+        name: value
+        default: ""
+    ports:
+      input: single
+      output: multiple
+
+  api:
+    name: API Call
+    category: Integration
+    inputs:
+      - type: text
+        name: url
+        default: https://api.example.com
+      - type: select
+        name: method
+        options: [GET, POST, PUT, DELETE]
+        default: GET
+    ports:
+      input: single
+      output: single

@@ -1,14 +1,27 @@
+import { useEffect } from 'react'
 import styled from '@emotion/styled'
-import { nodeTypes } from '../FlowEditor/nodes'
+import { useBlockStore } from '../../stores/blockStore'
 
 const SidebarContainer = styled.div`
-  width: 200px;
+  width: 250px;
   background: #f8f9fa;
   padding: 15px;
   border-right: 1px solid #ddd;
+  overflow-y: auto;
 `
 
-const NodeItem = styled.div`
+const Category = styled.div`
+  margin-bottom: 20px;
+`
+
+const CategoryTitle = styled.h3`
+  margin: 0 0 10px 0;
+  padding: 5px;
+  font-size: 14px;
+  color: #666;
+`
+
+const BlockItem = styled.div`
   padding: 10px;
   margin: 5px 0;
   background: white;
@@ -22,32 +35,35 @@ const NodeItem = styled.div`
 `
 
 const Sidebar = () => {
-  const onDragStart = (event, nodeType) => {
-    event.dataTransfer.setData('application/reactflow', nodeType)
+  const { blocks, categories, loadBlockDefinitions } = useBlockStore()
+
+  useEffect(() => {
+    loadBlockDefinitions()
+  }, [])
+
+  const onDragStart = (event, blockType) => {
+    event.dataTransfer.setData('application/reactflow', blockType)
     event.dataTransfer.effectAllowed = 'move'
   }
 
   return (
     <SidebarContainer>
-      <h3>Nodes</h3>
-      <NodeItem
-        draggable
-        onDragStart={(e) => onDragStart(e, 'text')}
-      >
-        Text Node
-      </NodeItem>
-      <NodeItem
-        draggable
-        onDragStart={(e) => onDragStart(e, 'button')}
-      >
-        Button Node
-      </NodeItem>
-      <NodeItem
-        draggable
-        onDragStart={(e) => onDragStart(e, 'image')}
-      >
-        Image Node
-      </NodeItem>
+      {categories.map(category => (
+        <Category key={category}>
+          <CategoryTitle>{category}</CategoryTitle>
+          {Object.entries(blocks)
+            .filter(([_, block]) => block.category === category)
+            .map(([type, block]) => (
+              <BlockItem
+                key={type}
+                draggable
+                onDragStart={(e) => onDragStart(e, type)}
+              >
+                {block.name}
+              </BlockItem>
+            ))}
+        </Category>
+      ))}
     </SidebarContainer>
   )
 }
